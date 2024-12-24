@@ -1,0 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+textarea {
+  background: transparent;
+  padding: 1em 2em;
+  font-size: 1rem;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 999px;
+  border: 1px solid #666;
+
+  &:focus {
+    outline: 1px solid #eee;
+  }
+}

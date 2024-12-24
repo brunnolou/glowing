@@ -1,0 +1,87 @@
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+body,
+html {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(45deg, #000, #444, #000, #444, #000);
+  /* background: linear-gradient(45deg, #fff, #888, #fff, #888); */
+}
+
+:root {
+  --glowingWidth: 4px;
+  --glowingBorderZIndex: 999;
+  --rotationDuration: 2s;
+  --glowingBlendMode: screen;
+  --glowingColors: cyan, black, purple, black, tomato, black, purple, cyan;
+  --glowingColors2: white, black, black, white, black, black, white;
+}
+
+.glowing-wrapper {
+  position: fixed;
+  z-index: var(--glowingBorderZIndex);
+
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+
+  mix-blend-mode: var(--glowingBlendMode);
+  pointer-events: none;
+}
+
+.glowing-container {
+  position: absolute;
+  inset: 0;
+
+  filter: blur(var(--glowingWidth));
+  mix-blend-mode: color-dodge;
+  border-radius: inherit;
+}
+
+.glowing-container--border {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+
+  border-radius: inherit;
+  mix-blend-mode: screen;
+
+  background: repeating-conic-gradient(from var(--angle), var(--glowingColors));
+
+  animation: spin-gradient calc(var(--rotationDuration) * 2) linear infinite;
+}
+
+.glowing-container--border::after {
+  content: '';
+  position: absolute;
+  inset: calc(var(--glowingWidth) * 2);
+  background: #000;
+  border-radius: inherit;
+  filter: blur(calc(var(--glowingWidth) / 2));
+}
+
+.glowing-container--border2 {
+  animation: spin-gradient var(--rotationDuration) linear infinite reverse;
+  mix-blend-mode: screen;
+  background: conic-gradient(from var(--angle), var(--glowingColors2));
+}
+
+.glowing-container--border2::after {
+  inset: calc(var(--glowingWidth) * 1);
+}
+
+.glowing-container-2 {
+  filter: blur(calc(var(--glowingWidth) / 2));
+}
+
+@keyframes spin-gradient {
+  from {
+    --angle: 0deg;
+  }
+  to {
+    --angle: 360deg;
+  }
+}
