@@ -8,20 +8,21 @@ document.querySelector('#app')!.innerHTML = `
 
     <button id="toggle-glow">Toggle Glow</button>
     <button id="remove-glow">Remove Glow</button>
+    <button id="add-body-glow">Add Body Glow</button>
 `
 
 const init = () => {
-  // document load
+  // Document load
   window.addEventListener('load', () => {
     const element = document.getElementById('ai-textarea')
     if (!element) return
 
-    const glowing = new Glowing(element, { rotationDuration: 3000 })
+    const glowing = new Glowing(element, { rotationDuration: 3000, label: 'AI' })
 
     const widthInput = document.getElementById('width') as HTMLInputElement
 
     if (widthInput) {
-      // on input change
+      // On input change
       widthInput.addEventListener('input', () => {
         const width = parseInt(widthInput.value)
         glowing.setOptions({ width })
@@ -30,6 +31,7 @@ const init = () => {
 
     const rotationDurationInput = document.getElementById('rotationDuration') as HTMLInputElement
     if (rotationDurationInput) {
+      // On input change
       rotationDurationInput.addEventListener('input', () => {
         const rotationDuration = parseInt(rotationDurationInput.value)
         glowing.setOptions({ rotationDuration })
@@ -38,12 +40,19 @@ const init = () => {
 
     if (!element) return
 
+    // On toggle glow button click
     document.getElementById('toggle-glow')!.addEventListener('click', () => {
       glowing.toggle()
     })
 
+    // On remove glow button click
     document.getElementById('remove-glow')!.addEventListener('click', () => {
       glowing.remove()
+    })
+
+    // On add body glow button click
+    document.getElementById('add-body-glow')!.addEventListener('click', () => {
+      glowing.set(document.body)
     })
   })
 }

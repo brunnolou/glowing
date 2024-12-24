@@ -1,5 +1,5 @@
 {
-  "name": "@yourusername/glowing",
+  "name": "glowing",
   "version": "0.1.0",
   "description": "A TypeScript library",
   "main": "dist/index.js",

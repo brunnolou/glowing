@@ -36,9 +36,12 @@ html {
   position: absolute;
   inset: 0;
 
+  border-radius: inherit;
+
   filter: blur(var(--glowingWidth));
   mix-blend-mode: color-dodge;
-  border-radius: inherit;
+
+  transition: filter 0.5s ease-in-out;
 }
 
 .glowing-container--border {
@@ -58,9 +61,12 @@ html {
   content: '';
   position: absolute;
   inset: calc(var(--glowingWidth) * 2);
+
   background: #000;
   border-radius: inherit;
   filter: blur(calc(var(--glowingWidth) / 2));
+
+  transition: inset 0.5s ease-in-out, filter 0.5s ease-in-out;
 }
 
 .glowing-container--border2 {

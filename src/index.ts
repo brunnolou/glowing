@@ -4,6 +4,7 @@ import './styles.css'
 type GlowingOptions = {
   timeout?: number
   borderRadius?: number
+  label?: string
 
   /**
    * @default 2s
@@ -37,37 +38,39 @@ type GlowingOptions = {
 }
 
 export class Glowing {
+  private cleanupListeners: (() => void) | null = null
+  private glowWrapper: HTMLDivElement | null = null
+  private options: GlowingOptions = {}
+
   constructor(el: HTMLElement, options: GlowingOptions = {}) {
-    this.add(el, options)
+    this.options = options
+    this.set(el, this.options)
   }
 
-  private cleanupListeners: (() => void) | null = null
-  private glowContainer: HTMLDivElement | null = null
-
-  private add(el: HTMLElement, options: GlowingOptions = {}) {
+  public async set(el: HTMLElement, options: GlowingOptions = {}) {
     // Clean up any existing element first
-    if (this.cleanupListeners) {
-      this.cleanupListeners()
-      this.cleanupListeners = null
-    }
+    await this.remove()
 
-    this.glowContainer = this.createGlowContainer()
+    this.glowWrapper = this.createGlowContainer()
 
-    const styles = getComputedStyle(el)
+    this.setOptions({ ...this.options, ...options })
 
-    this.glowContainer.style.setProperty('opacity', '1')
-
-    this.setOptions(options)
+    setTimeout(() => {
+      if (!this.glowWrapper) return
+      this.glowWrapper.style.setProperty('opacity', '1')
+    }, 100)
 
     let timeout: NodeJS.Timeout | null = null
 
     if (options.timeout) {
       timeout = setTimeout(() => {
-        if (!this.glowContainer) return
+        if (!this.glowWrapper) return
 
-        this.glowContainer.style.setProperty('opacity', '0')
+        this.glowWrapper.style.setProperty('opacity', '0')
       }, options.timeout)
     }
+
+    const styles = getComputedStyle(el)
 
     const setElementPosition = () => {
       const rect = el.getBoundingClientRect()
@@ -75,11 +78,11 @@ export class Glowing {
       const borderRadius = parseFloat(styles.borderRadius) || 0
 
       // Set glowContainer rect
-      this.glowContainer?.style.setProperty('top', `${rect.y}px`)
-      this.glowContainer?.style.setProperty('left', `${rect.x}px`)
-      this.glowContainer?.style.setProperty('width', `${rect.width}px`)
-      this.glowContainer?.style.setProperty('height', `${rect.height}px`)
-      this.glowContainer?.style.setProperty('border-radius', `${borderRadius}px`)
+      this.glowWrapper?.style.setProperty('top', `${rect.y}px`)
+      this.glowWrapper?.style.setProperty('left', `${rect.x}px`)
+      this.glowWrapper?.style.setProperty('width', `${rect.width}px`)
+      this.glowWrapper?.style.setProperty('height', `${rect.height}px`)
+      this.glowWrapper?.style.setProperty('border-radius', `${borderRadius}px`)
     }
 
     this.recalculatePosition = setElementPosition
@@ -108,26 +111,36 @@ export class Glowing {
   }
 
   public setOptions(options: GlowingOptions) {
-    if (!this.glowContainer) return
+    if (!this.glowWrapper) return
 
     if (options.rotationDuration) {
-      this.glowContainer.style.setProperty('--rotationDuration', `${options.rotationDuration}ms`)
+      this.glowWrapper.style.setProperty('--rotationDuration', `${options.rotationDuration}ms`)
+      this.options.rotationDuration = options.rotationDuration
     }
 
     if (options.blendMode) {
-      this.glowContainer.style.setProperty('--glowingBlendMode', options.blendMode)
+      this.glowWrapper.style.setProperty('--glowingBlendMode', options.blendMode)
+      this.options.blendMode = options.blendMode
     }
 
     if (options.width) {
-      this.glowContainer.style.setProperty('--glowingWidth', `${options.width}px`)
+      this.glowWrapper.style.setProperty('--glowingWidth', `${options.width}px`)
+      this.options.width = options.width
     }
 
     if (options.colors) {
-      this.glowContainer.style.setProperty('--glowingColors', options.colors.join(','))
+      this.glowWrapper.style.setProperty('--glowingColors', options.colors.join(','))
+      this.options.colors = options.colors
     }
 
     if (options.colors2) {
-      this.glowContainer.style.setProperty('--glowingColors2', options.colors2.join(','))
+      this.glowWrapper.style.setProperty('--glowingColors2', options.colors2.join(','))
+      this.options.colors2 = options.colors2
+    }
+
+    if (options.label) {
+      this.glowWrapper.setAttribute('data-glowing-label', options.label)
+      this.options.label = options.label
     }
   }
 
@@ -136,6 +149,7 @@ export class Glowing {
   private createGlowContainer() {
     const glowWrapper = document.createElement('div')
     glowWrapper.classList.add('glowing-wrapper')
+    glowWrapper.style.setProperty('opacity', '0')
 
     // Glow container 1
     const glowingContainer1 = document.createElement('div')
@@ -162,24 +176,24 @@ export class Glowing {
   }
 
   public toggle() {
-    if (!this.glowContainer) return
+    if (!this.glowWrapper) return
 
-    this.glowContainer.style.setProperty(
+    this.glowWrapper.style.setProperty(
       'opacity',
-      this.glowContainer.style.getPropertyValue('opacity') === '1' ? '0' : '1',
+      this.glowWrapper.style.getPropertyValue('opacity') === '1' ? '0' : '1',
     )
   }
 
   public show() {
-    if (!this.glowContainer) return
+    if (!this.glowWrapper) return
 
-    this.glowContainer.style.setProperty('opacity', '1')
+    this.glowWrapper.style.setProperty('opacity', '1')
   }
 
   public hide() {
-    if (!this.glowContainer) return
+    if (!this.glowWrapper) return
 
-    this.glowContainer.style.setProperty('opacity', '0')
+    this.glowWrapper.style.setProperty('opacity', '0')
   }
 
   public remove() {
@@ -188,11 +202,16 @@ export class Glowing {
       this.cleanupListeners = null
     }
 
-    if (!this.glowContainer) return
+    return new Promise(resolve => {
+      if (!this.glowWrapper) return resolve(false)
 
-    this.glowContainer.style.setProperty('opacity', '0')
+      this.glowWrapper.style.setProperty('opacity', '0')
 
-    // Wait for css transition to finish
-    this.glowContainer.addEventListener('transitionend', () => this.glowContainer?.remove())
+      // Wait for css transition to finish
+      this.glowWrapper.addEventListener('transitionend', () => {
+        this.glowWrapper?.remove()
+        resolve(true)
+      })
+    })
   }
 }
