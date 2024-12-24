@@ -3,8 +3,16 @@ import { Glowing } from '../src'
 document.querySelector('#app')!.innerHTML = `
     <textarea id="ai-textarea">Here is a textarea</textarea>
 
-    <input type="range" id="width" min="1" max="100" value="8" />
-    <input type="range" id="rotationDuration" min="500" max="6000" value="3000" />
+    <ul>
+      <li>
+        <input type="range" id="width" min="1" max="100" value="8" />
+        <label for="width">Width</label>
+      </li>
+      <li>
+        <input type="range" id="rotationDuration" min="500" max="6000" value="3000" />
+        <label for="rotationDuration">Rotation Duration</label>
+      </li>
+    </ul>
 
     <button id="toggle-glow">Toggle Glow</button>
     <button id="remove-glow">Remove Glow</button>

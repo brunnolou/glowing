@@ -8,23 +8,38 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
+body,
+html {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(45deg, #000, #444, #000, #444, #000);
+  background: linear-gradient(45deg, #fff, #eee, #fff, #eee);
+}
 
-img, picture, video, canvas, svg {
+img,
+picture,
+video,
+canvas,
+svg {
   display: block;
   max-width: 100%;
 }
 
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font: inherit;
 }
 
 textarea {
+  margin: 2rem;
   background: transparent;
-  padding: 1em 2em;
+  padding: 0.5em;
   font-size: 1rem;
-  color: #fff;
+  color: #000;
   cursor: pointer;
-  border-radius: 999px;
+  border-radius: 16px;
   border: 1px solid #666;
 
   &:focus {
