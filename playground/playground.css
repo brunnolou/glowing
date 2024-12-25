@@ -4,16 +4,16 @@
   box-sizing: border-box;
 }
 
-body {
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-}
 body,
 html {
   height: 100%;
   width: 100%;
   background: linear-gradient(45deg, #000, #444, #000, #444, #000);
-  background: linear-gradient(45deg, #fff, #eee, #fff, #eee);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-family: sans-serif;
+
+  /* background: linear-gradient(45deg, #fff, #eee, #fff, #eee); */
 }
 
 img,
@@ -39,7 +39,7 @@ textarea {
   font-size: 1rem;
   color: #000;
   cursor: pointer;
-  border-radius: 16px;
+  border-radius: 26px;
   border: 1px solid #666;
 
   &:focus {

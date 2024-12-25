@@ -12,6 +12,10 @@ document.querySelector('#app')!.innerHTML = `
         <input type="range" id="rotationDuration" min="500" max="6000" value="3000" />
         <label for="rotationDuration">Rotation Duration</label>
       </li>
+      <li>
+        <input type="range" id="glowingBlurRatio" min="-5" max="10" value="1.5" step="0.1" />
+        <label for="glowingBlurRatio">Glowing Blur Ratio</label>
+      </li>
     </ul>
 
     <button id="toggle-glow">Toggle Glow</button>
@@ -43,6 +47,15 @@ const init = () => {
       rotationDurationInput.addEventListener('input', () => {
         const rotationDuration = parseInt(rotationDurationInput.value)
         glowing.setOptions({ rotationDuration })
+      })
+    }
+
+    const glowingBlurRatioInput = document.getElementById('glowingBlurRatio') as HTMLInputElement
+    if (glowingBlurRatioInput) {
+      // On input change
+      glowingBlurRatioInput.addEventListener('input', () => {
+        const glowingBlurRatio = parseInt(glowingBlurRatioInput.value)
+        glowing.setOptions({ glowingBlurRatio })
       })
     }
 

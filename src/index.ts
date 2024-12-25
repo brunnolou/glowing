@@ -35,6 +35,12 @@ type GlowingOptions = {
    * @description The number of colors to use in the second gradient.
    */
   colors2?: string[]
+
+  /**
+   * @default 1.5
+   * @description The blur ratio applied to the glow effect. Higher values create a more diffused glow.
+   */
+  glowingBlurRatio?: number
 }
 
 export class Glowing {
@@ -142,6 +148,11 @@ export class Glowing {
       this.glowWrapper.setAttribute('data-glowing-label', options.label)
       this.options.label = options.label
     }
+
+    if (options.glowingBlurRatio) {
+      this.glowWrapper.style.setProperty('--glowingBlurRatio', options.glowingBlurRatio.toString())
+      this.options.glowingBlurRatio = options.glowingBlurRatio
+    }
   }
 
   public recalculatePosition: () => void = () => {}
@@ -155,20 +166,41 @@ export class Glowing {
     const glowingContainer1 = document.createElement('div')
     glowingContainer1.classList.add('glowing-container')
 
+    const blurWrapper1 = document.createElement('div')
+    blurWrapper1.classList.add('glowing-container--blur-wrapper')
+
     const glowingBorder = document.createElement('div')
-    glowingBorder.classList.add('glowing-container--border')
-    glowingContainer1.appendChild(glowingBorder)
+    glowingBorder.classList.add('glowing-border')
+    blurWrapper1.appendChild(glowingBorder)
+    glowingContainer1.appendChild(blurWrapper1)
 
     // Glow container 2
     const glowingContainer2 = document.createElement('div')
     glowingContainer2.classList.add('glowing-container', 'glowing-container-2')
 
+    const blurWrapper2 = document.createElement('div')
+    blurWrapper2.classList.add('glowing-container--blur-wrapper')
+
     const glowingBorder2 = document.createElement('div')
-    glowingBorder2.classList.add('glowing-container--border', 'glowing-container--border2')
-    glowingContainer2.appendChild(glowingBorder2)
+    glowingBorder2.classList.add('glowing-border', 'glowing-border2')
+    blurWrapper2.appendChild(glowingBorder2)
+    glowingContainer2.appendChild(blurWrapper2)
+
+    // Glow container 3
+    const glowingContainer3 = document.createElement('div')
+    glowingContainer3.classList.add('glowing-container', 'glowing-container-3')
+
+    const blurWrapper3 = document.createElement('div')
+    blurWrapper3.classList.add('glowing-container--blur-wrapper')
+
+    const glowingBorder3 = document.createElement('div')
+    glowingBorder3.classList.add('glowing-border', 'glowing-border3')
+    blurWrapper3.appendChild(glowingBorder3)
+    glowingContainer3.appendChild(blurWrapper3)
 
     glowWrapper.appendChild(glowingContainer1)
     glowWrapper.appendChild(glowingContainer2)
+    glowWrapper.appendChild(glowingContainer3)
 
     document.body.appendChild(glowWrapper)
 

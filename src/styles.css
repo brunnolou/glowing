@@ -6,11 +6,12 @@
 
 :root {
   --glowingWidth: 4px;
+  --glowingBlurRatio: 1.5;
   --glowingBorderZIndex: 999;
   --rotationDuration: 2s;
   --glowingBlendMode: multiply;
-  --glowingColors: cyan, black, purple, black, tomato, black, purple, cyan;
-  --glowingColors2: white, black, black, white, black, black, white;
+  --glowingColors: cyan, purple, tomato, purple, cyan;
+  --glowingColors2: white, transparent, transparent, white, transparent, transparent, white;
 }
 
 .glowing-wrapper {
@@ -20,8 +21,9 @@
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
 
-  mix-blend-mode: var(--glowingBlendMode);
   pointer-events: none;
+
+  --glowingInnerWidth: calc(var(--glowingWidth) / 4);
 }
 
 .glowing-container {
@@ -30,49 +32,71 @@
 
   border-radius: inherit;
 
-  filter: blur(var(--glowingWidth));
-  mix-blend-mode: multiply;
-
   transition: filter 0.5s ease-in-out;
 }
 
-.glowing-container--border {
+.glowing-border {
   display: inline-block;
   width: 100%;
   height: 100%;
 
   border-radius: inherit;
-  mix-blend-mode: multiply;
 
-  background: repeating-conic-gradient(from var(--angle), var(--glowingColors));
-
-  animation: glowing-spin-gradient calc(var(--rotationDuration) * 2) linear infinite;
+  /* background: repeating-conic-gradient(from var(--angle), var(--glowingColors)); */
 }
 
-.glowing-container--border::after {
+.glowing-container--blur-wrapper {
+  position: absolute;
+  inset: 0;
+  filter: blur(calc(var(--glowingWidth) / 2 * var(--glowingBlurRatio)));
+  border-radius: inherit;
+}
+
+
+.glowing-border::after {
   content: '';
   position: absolute;
-  inset: calc(var(--glowingWidth) * 2);
+  inset: 0;
 
-  background: #fff;
+  animation: glowing-spin-gradient var(--rotationDuration) linear infinite;
+
   border-radius: inherit;
-  filter: blur(calc(var(--glowingWidth) / 2));
 
-  transition: inset 0.5s ease-in-out, filter;
+  border: var(--glowingWidth) solid transparent;
+  background: conic-gradient(from var(--angle), var(--glowingColors)) border-box;
+  mask:
+    linear-gradient(#000 0 0) padding-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+
+  transition:
+    inset 0.5s ease-in-out,
+    filter;
 }
-
-.glowing-container--border2 {
-  animation: glowing-spin-gradient var(--rotationDuration) linear infinite reverse;
-  mix-blend-mode: multiply;
-  background: conic-gradient(from var(--angle), var(--glowingColors2));
-}
-
-.glowing-container--border2::after {
-  inset: calc(var(--glowingWidth) * 1);
-}
-
 .glowing-container-2 {
-  filter: blur(calc(var(--glowingWidth) / 2));
+  inset: calc(var(--glowingInnerWidth) * 1);
+}
+
+.glowing-border2::after {
+  border: calc(var(--glowingWidth) / 2) solid transparent;
+}
+
+.glowing-container-2 .glowing-container--blur-wrapper {
+  filter: blur(calc(var(--glowingWidth) / 3 * var(--glowingBlurRatio)));
+}
+
+
+.glowing-border3::after {
+  inset: calc(var(--glowingWidth) /-2);
+  border: calc(var(--glowingWidth) * 2) solid transparent;
+
+  background: conic-gradient(from var(--angle), var(--glowingColors2)) border-box;
+  animation-direction: reverse;
+  animation-duration: calc(var(--rotationDuration) * 1.31);
+  mask:
+    linear-gradient(#000 0 0) padding-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
 }
 
 @keyframes glowing-spin-gradient {
