@@ -247,16 +247,8 @@ export class Glowing {
       this.cleanupListeners = null
     }
 
-    return new Promise(resolve => {
-      if (!this.glowWrapper) return resolve(false)
+    if (!this.glowWrapper) return
 
-      this.glowWrapper.style.setProperty('opacity', '0')
-
-      // Wait for css transition to finish
-      this.glowWrapper.addEventListener('transitionend', () => {
-        this.glowWrapper?.remove()
-        resolve(true)
-      })
-    })
+    this.glowWrapper?.remove()
   }
 }
