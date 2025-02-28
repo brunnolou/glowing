@@ -1,11 +1,13 @@
-# Glowing
+# AI Glowing effects 💫
 
 A modern TypeScript library for creating beautiful glowing border effects around HTML elements.
 
 ## Installation
 
 ```bash
-npm install glowing
+npm add glowing
+yarn add glowing
+pnpm add glowing
 ```
 
 ## Usage
