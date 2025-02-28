@@ -1,6 +1,6 @@
 {
   "name": "glowing",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A TypeScript library for AI glowing effects",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
