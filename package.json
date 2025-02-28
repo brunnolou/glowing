@@ -1,6 +1,6 @@
 {
   "name": "glowing",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A TypeScript library for AI glowing effects",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -20,12 +20,12 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^20.0.0",
+    "prettier": "^3.2.0",
+    "tsup": "^8.0.0",
     "typescript": "^5.0.0",
     "vite": "^5.0.0",
-    "tsup": "^8.0.0",
-    "vitest": "^1.0.0",
-    "@types/node": "^20.0.0",
-    "prettier": "^3.2.0"
+    "vitest": "^1.0.0"
   },
   "peerDependencies": {}
 }
