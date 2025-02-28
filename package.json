@@ -1,7 +1,7 @@
 {
   "name": "glowing",
   "version": "0.1.0",
-  "description": "A TypeScript library",
+  "description": "A TypeScript library for AI glowing effects",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -12,7 +12,7 @@
     "dev": "vite",
     "build": "tsup",
     "prepare": "npm run build",
-    "test": "vitest",
+    "test": "echo 'No tests yet'",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },

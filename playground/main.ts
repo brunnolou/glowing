@@ -29,7 +29,7 @@ const init = () => {
     const element = document.getElementById('ai-textarea')
     if (!element) return
 
-    const glowing = new Glowing(element, { rotationDuration: 3000, label: 'AI' })
+    const glowing = new Glowing(element, { rotationDuration: 3000 })
 
     const widthInput = document.getElementById('width') as HTMLInputElement
 

@@ -4,7 +4,6 @@ import './styles.css'
 type GlowingOptions = {
   timeout?: number
   borderRadius?: number
-  label?: string
 
   /**
    * @default 2s
@@ -142,11 +141,6 @@ export class Glowing {
     if (options.colors2) {
       this.glowWrapper.style.setProperty('--glowingColors2', options.colors2.join(','))
       this.options.colors2 = options.colors2
-    }
-
-    if (options.label) {
-      this.glowWrapper.setAttribute('data-glowing-label', options.label)
-      this.options.label = options.label
     }
 
     if (options.glowingBlurRatio) {

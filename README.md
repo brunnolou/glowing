@@ -40,10 +40,12 @@ glow.setOptions({
   colors2: ['white', 'transparent', 'transparent', 'white', 'transparent', 'transparent', 'white'],
   // Blur intensity of the glow
   glowingBlurRatio: 1.5,
+  // Optional timeout to auto-hide the glow (in ms)
+  timeout: 3000,
+  // Optional border radius override
+  borderRadius: 8,
 })
 ```
-
-Open [http://localhost:3000](http://localhost:3000) to see the playground.
 
 ## Development
 
@@ -68,4 +70,4 @@ The package is built for modern browsers and includes:
 
 ## License
 
-Apache 2.0
+MIT
