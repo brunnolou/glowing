@@ -201,6 +201,9 @@ export class Glowing {
     return glowWrapper
   }
 
+  /**
+   * @description Toggle the glow wrapper
+   */
   public toggle() {
     if (!this.glowWrapper) return
 
@@ -210,18 +213,34 @@ export class Glowing {
     )
   }
 
+  /**
+   * @description Show the glow wrapper
+   */
   public show() {
     if (!this.glowWrapper) return
 
     this.glowWrapper.style.setProperty('opacity', '1')
   }
 
+  /**
+   * @description Hide the glow wrapper
+   */
   public hide() {
     if (!this.glowWrapper) return
 
     this.glowWrapper.style.setProperty('opacity', '0')
   }
 
+  /**
+   * @description Remove the glow wrapper and all its children. Same as `remove()`
+   */
+  public destroy() {
+    this.remove()
+  }
+
+  /**
+   * @description Remove the glow wrapper and all its children. Same as `destroy()`
+   */
   public remove() {
     if (this.cleanupListeners) {
       this.cleanupListeners()
