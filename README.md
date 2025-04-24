@@ -13,6 +13,7 @@ pnpm add glowing
 ## Usage
 
 ```ts
+import 'glowing/dist/index.css';
 import { Glowing } from 'glowing'
 
 // Create a glowing effect around an element
